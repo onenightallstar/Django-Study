@@ -1,0 +1,20 @@
+<form action="{% url 'polls:vote' question.id %}" method="post"> 
+<!-- form表单，action 属性规定当提交表单时向何处发送表单数据。 -->
+    {% csrf_token %}
+    <!-- 防止CSRF攻击 -->
+    <fieldset> 
+    <!-- fieldset 标签定义了一个 HTML 表单中的字段集合。 -->
+        <legend><h1>{{ question.question_text }}</h1></legend>
+        <!-- legend 标签为 fieldset 元素定义标题。 -->
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        <!-- 如果有错误信息，就显示错误信息  error_message来自于 -->
+        {% for choice in question.choice_set.all %}
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+            <!-- radio 单选框，name 属性规定单选按钮的名称。id 属性规定单选按钮的 id。value 属性规定单选按钮的值。 -->
+            <!-- forloop.counter 从1开始计数 -->
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+            <!-- label 标签为 input 元素定义标注（标记）。 -->
+        {% endfor %}
+    </fieldset>
+    <input type="submit" value="Vote">
+    </form>

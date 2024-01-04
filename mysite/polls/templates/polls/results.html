@@ -1,0 +1,11 @@
+<h1>{{ question.question_text }}</h1>
+
+<ul>
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+{% endfor %}
+</ul>
+<!-- --视觉间隔
+{{ choice.votes|pluralize }} 是一个带有过滤器的变量标记。pluralize 过滤器会根据 choice.votes 的值决定是否添加 's' 来形成复数。
+如果 choice.votes 大于 1，那么结果就是 "votes"，否则就是 "vote"。 -->
+<a href="{% url 'polls:detail' question.id %}">Vote again?</a>

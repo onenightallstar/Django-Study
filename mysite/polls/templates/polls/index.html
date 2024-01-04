@@ -1,0 +1,18 @@
+{% load static %}
+<!-- 加载静态文件，这样就可以使用静态文件了 -->
+<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+<!-- link是HTML连接标签
+ref="stylesheet" 标签类型
+href="{% static 'polls/style.css' %}" 链接的地址 -->
+{% if latest_question_list %} 
+    <ul>
+    {% for question in latest_question_list %}
+        <!-- <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li> -->
+        
+        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li> 
+        <!-- 因为写了 app_name = 'polls'，所以这里的 url 要写成 polls:detail question.id是参数 -->
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
